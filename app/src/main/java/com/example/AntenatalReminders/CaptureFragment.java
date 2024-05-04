@@ -31,7 +31,8 @@ import java.util.Timer;
 
 public class CaptureFragment extends Fragment {
     View view;
-    private EditText nameT, emailT, companyT, pnumberT, designationT;
+//    private EditText nameT, emailT, companyT, pnumberT, designationT;
+    private EditText nameT, BirthDateT, HospitalT, pnumberT, NextClinicT;
 
     private Button buttonSubmit;
     private Button addSubmit;
@@ -54,7 +55,8 @@ public class CaptureFragment extends Fragment {
 
     private List<String> allItems;
     private List<String> displayedItems;
-    DatabaseReference db, nameref, Cref, PNref, DesRef, Eref;
+//    DatabaseReference db, nameref, Cref, PNref, DesRef, Eref;
+    DatabaseReference db, nameref, Hospitalref, PNref, ClinicRef, BirthDateref;
     private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 0;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,10 +64,13 @@ public class CaptureFragment extends Fragment {
         view = inflater.inflate(R.layout.capturefragment, container, false);
 
         nameT = view.findViewById(R.id.nameT);
-        emailT = view.findViewById(R.id.emailT);
-        companyT = view.findViewById(R.id.companyT);
+        BirthDateT = view.findViewById(R.id.emailT);
+//        emailT = view.findViewById(R.id.emailT);
+        HospitalT = view.findViewById(R.id.companyT);
+//        companyT = view.findViewById(R.id.companyT);
         pnumberT = view.findViewById(R.id.pnumberT);
-        designationT = view.findViewById(R.id.designationT);
+        NextClinicT = view.findViewById(R.id.designationT);
+//        designationT = view.findViewById(R.id.designationT);
         addSubmit = view.findViewById(R.id.buttonNew);
         confirmSubmit = view.findViewById(R.id.buttonConfirm);
 
@@ -75,10 +80,10 @@ public class CaptureFragment extends Fragment {
         Log.d("CaptureFragment", "View initialized successfully");
         db = FirebaseDatabase.getInstance().getReference();
         nameref = db.child("Name");
-        Cref = db.child("Company");
-        Eref = db.child("Email");
+        Hospitalref = db.child("Company");
+        BirthDateref = db.child("Email");
         PNref = db.child("PhoneNumber");
-        DesRef = db.child("Designation");
+        ClinicRef = db.child("Designation");
 
         return view;
     }
@@ -87,24 +92,24 @@ public class CaptureFragment extends Fragment {
         if (nameT.getText().toString().isEmpty()) {
             nameT.setError("This field is required");
             nameT.requestFocus();
-        } else if (companyT.getText().toString().isEmpty()) {
-            companyT.setError("This field is required");
-            companyT.requestFocus();
-        } else if (emailT.getText().toString().isEmpty()) {
-            emailT.setError("This field is required");
-            emailT.requestFocus();
+        } else if (HospitalT.getText().toString().isEmpty()) {
+            HospitalT.setError("This field is required");
+            HospitalT.requestFocus();
+        } else if (BirthDateT.getText().toString().isEmpty()) {
+            BirthDateT.setError("This field is required");
+            BirthDateT.requestFocus();
         } else if (pnumberT.getText().toString().isEmpty()) {
             pnumberT.setError("This field is required");
             pnumberT.requestFocus();
-        } else if (designationT.getText().toString().isEmpty()) {
-            designationT.setError("This field is required");
-            designationT.requestFocus();
+        } else if (NextClinicT.getText().toString().isEmpty()) {
+            NextClinicT.setError("This field is required");
+            NextClinicT.requestFocus();
         } else {
             final String name = nameT.getText().toString().trim().toUpperCase();
-            final String company = companyT.getText().toString().trim().toUpperCase();
-            final String email = emailT.getText().toString().trim();
+            final String company = HospitalT.getText().toString().trim().toUpperCase();
+            final String email = BirthDateT.getText().toString().trim();
             final String pnumber = pnumberT.getText().toString().trim();
-            final String designation = designationT.getText().toString().trim();
+            final String designation = NextClinicT.getText().toString().trim();
 
             sendToDB(name, company, email, pnumber, designation);
             sendSMSMessage();
@@ -113,10 +118,10 @@ public class CaptureFragment extends Fragment {
 
     private void sendToDB(String name, String company, String email, String pnumber, String designation) {
         nameref.setValue(name);
-        Cref.setValue(company);
-        Eref.setValue(email);
+        Hospitalref.setValue(company);
+        BirthDateref.setValue(email);
         PNref.setValue(pnumber);
-        DesRef.setValue(designation);
+        ClinicRef.setValue(designation);
     }
 
     protected void sendSMSMessage() {
@@ -129,8 +134,8 @@ public class CaptureFragment extends Fragment {
         } else {
             // Permission already granted; send SMS
             String message ;
-            message= "Hello Mr Karari Welcome to Karatina University. Hoping to see you again next time";
-            String phonenumber = "+254797917978";
+            message= "Your NexClinic Date is 10th November 2024";
+            String phonenumber = "+254742143102";
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage(phonenumber, null, message, null, null);
             Log.d(TAG, "sendSMSMessage: "+phonenumber);

@@ -39,9 +39,9 @@ public class LoginActivity extends AppCompatActivity {
         passwordTV = findViewById(R.id.textPassword);
         btnTV = findViewById(R.id.loginBtn);
 
-        if(mAuth.getCurrentUser()!=null){
-            loadRegistration();
-        }
+//        if(mAuth.getCurrentUser()!=null){
+//            loadRegistration();
+//        }
 
 
         btnTV.setOnClickListener(new View.OnClickListener() {

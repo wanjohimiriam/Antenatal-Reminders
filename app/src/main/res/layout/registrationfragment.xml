@@ -23,7 +23,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/comf"
-        android:text="Guest List"
+        android:text= "Linda Mama App"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
